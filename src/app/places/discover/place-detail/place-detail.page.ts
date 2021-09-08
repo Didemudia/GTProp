@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ActionSheetController,
   ModalController,
   NavController,
 } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
 import { Place } from '../../place.model';
 import { PlacesService } from '../../places.service';
@@ -14,8 +15,9 @@ import { PlacesService } from '../../places.service';
   templateUrl: './place-detail.page.html',
   styleUrls: ['./place-detail.page.scss'],
 })
-export class PlaceDetailPage implements OnInit {
+export class PlaceDetailPage implements OnInit, OnDestroy {
   place: Place;
+  private placeSub: Subscription;
 
   constructor(
     private navCtrl: NavController,
@@ -26,12 +28,16 @@ export class PlaceDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe((paramMap) => {
+    this.placeSub = this.route.paramMap.subscribe((paramMap) => {
       if (!paramMap.has('placeId')) {
         this.navCtrl.navigateBack('/places/tabs/discover');
         return;
       }
-      this.place = this.placesService.getPlace(paramMap.get('placeId'));
+      this.placesService
+        .getPlace(paramMap.get('placeId'))
+        .subscribe((place) => {
+          this.place = place;
+        });
     });
   }
 
@@ -40,21 +46,24 @@ export class PlaceDetailPage implements OnInit {
     //this.navCtrl.navigateBack('/places/tabs/discover');
     this.actionSheetCtrl
       .create({
-        header: 'Choose an Action',
+        header: 'Contact Agent',
         buttons: [
           {
-            text: 'Select Date',
+            text: 'Via Phone Call',
+            icon: 'call-outline',
             handler: () => {
               this.openBookingModal('select');
             },
           },
           {
-            text: 'Random Date',
+            text: 'Via Text Message',
+            icon: 'chatbox-ellipses-outline',
             handler: () => {
               this.openBookingModal('random');
             },
           },
           {
+            icon: 'close-outline',
             text: 'Cancel',
             role: 'cancel',
           },
@@ -82,5 +91,11 @@ export class PlaceDetailPage implements OnInit {
 
   openBookingModal(mode: 'select' | 'random') {
     console.log(mode);
+  }
+
+  ngOnDestroy() {
+    if (this.placeSub) {
+      this.placeSub.unsubscribe();
+    }
   }
 }

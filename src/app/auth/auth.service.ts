@@ -21,6 +21,12 @@ export interface AuthResponseData {
 })
 export class AuthService {
   private _user = new BehaviorSubject<User>(null);
+  private _userId = 'Sujimoto Agency';
+
+  get userId() {
+    return this._userId;
+  }
+
 
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
@@ -34,17 +40,17 @@ export class AuthService {
     );
   }
 
-  get userId() {
-    return this._user.asObservable().pipe(
-      map((user) => {
-        if (user) {
-          return user.id;
-        } else {
-          return null;
-        }
-      })
-    );
-  }
+  // get userId() {
+  //   return this._user.asObservable().pipe(
+  //     map((user) => {
+  //       if (user) {
+  //         return user.id;
+  //       } else {
+  //         return null;
+  //       }
+  //     })
+  //   );
+  // }
 
   constructor(private http: HttpClient) {}
 

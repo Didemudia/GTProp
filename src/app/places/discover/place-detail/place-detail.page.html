@@ -49,25 +49,18 @@
   <ion-row>
     <ion-col>
       <ion-icon name="location-outline" color="primary"></ion-icon>
-      <ion-label style="color: #808289"> {{place.description}} </ion-label>
+      <ion-label style="color: #808289"> {{place.location}} </ion-label>
       <h5><strong>Description</strong></h5>
       <ion-text>
-        Its a spacious newly renovated spacious 3 bedrooms flat in a serviced
-        mini-estate with a swimming pool tennis court green area with a 24\7
-        electricity in Ikeja GRA for rent, apartment tiled round, painted,
-        spacious sitting room with a dining section and a visitors toilet,
-        fitted with air conditioner, well furnished kitchen with cabinets, water
-        heater and an emergency exit. Spacious bedrooms with wardrobe and a
-        toilet and bathroom shared by both rooms with water heater, master
-        bedroom en-suite with a walk-in closet, water heater and more.
+        {{place.description}}
       </ion-text>
-      <p><strong>Property Type: </strong>3 Bedroom Flat</p>
+      <p><strong>Property Type: </strong> {{place.type}} </p>
 
-      <p><strong>Added on: </strong>3 Sep 2021</p>
+      <p><strong>Added on: </strong> {{place.date}} </p>
 
-      <p><strong>Agent: </strong>Sujimoto Agency</p>
+      <p><strong>Agent: </strong> {{place.userId}} </p>
     </ion-col>
   </ion-row>
 
-  <ion-button color="primary" margin (click)="onBookPlace()"> Book </ion-button>
+  <ion-button color="primary" margin (click)="onBookPlace()"> Contact Agent </ion-button>
 </ion-content>
