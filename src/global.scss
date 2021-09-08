@@ -24,3 +24,47 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+ion-tab-bar {
+
+	--background: #ffffff;
+	box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.4);
+	border-radius: 50px !important;
+
+	height: 65px;
+	width: 70%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+	bottom: 20px;
+	position: relative;
+	margin: 0 auto !important;
+	border-top: none;
+}
+
+ion-tab-button {
+
+    border-radius: 50px !important;
+}
+
+.detailBackButton {
+  z-index: 2;
+  position: absolute;
+  left: 5%;
+  top: 8%;
+  margin: auto;
+
+}
+
+.detailOptionButton {
+  z-index: 2;
+  position: absolute;
+  right: 5%;
+  top: 8%;
+  margin: auto;
+
+}
+
+

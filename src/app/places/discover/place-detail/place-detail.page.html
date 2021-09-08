@@ -1,0 +1,73 @@
+<ion-header>
+  <div>
+    <!-- <ion-button class="detailBackButton">
+      <ion-back-button defaultHref="/places/tabs/discover"></ion-back-button>
+
+    </ion-button> -->
+
+    <ion-button routerLink="/places/tabs/discover" class="detailBackButton">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+
+    <ion-slides pager="true">
+      <ion-slide>
+        <ion-img [src]="place.imageUrl"></ion-img>
+      </ion-slide>
+
+      <ion-slide>
+        <ion-img [src]="place.imageUrl"></ion-img>
+      </ion-slide>
+
+      <ion-slide>
+        <ion-img [src]="place.imageUrl"></ion-img>
+      </ion-slide>
+      <ion-slide>
+        <ion-img [src]="place.imageUrl"></ion-img>
+      </ion-slide>
+    </ion-slides>
+
+    <!-- <ion-img [src]="place.imageUrl"></ion-img> -->
+
+    <ion-button routerLink="/places/tabs/discover" class="detailOptionButton">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </div>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-row>
+    <ion-col size="9">
+      <h3>{{place.title}}</h3>
+    </ion-col>
+    <ion-col class="ion-align-self-center ion-text-right">
+      <ion-button fill="clear" class="icon-only">
+        <ion-icon size="large" color="danger" name="heart"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-icon name="location-outline" color="primary"></ion-icon>
+      <ion-label style="color: #808289"> {{place.description}} </ion-label>
+      <h5><strong>Description</strong></h5>
+      <ion-text>
+        Its a spacious newly renovated spacious 3 bedrooms flat in a serviced
+        mini-estate with a swimming pool tennis court green area with a 24\7
+        electricity in Ikeja GRA for rent, apartment tiled round, painted,
+        spacious sitting room with a dining section and a visitors toilet,
+        fitted with air conditioner, well furnished kitchen with cabinets, water
+        heater and an emergency exit. Spacious bedrooms with wardrobe and a
+        toilet and bathroom shared by both rooms with water heater, master
+        bedroom en-suite with a walk-in closet, water heater and more.
+      </ion-text>
+      <p><strong>Property Type: </strong>3 Bedroom Flat</p>
+
+      <p><strong>Added on: </strong>3 Sep 2021</p>
+
+      <p><strong>Agent: </strong>Sujimoto Agency</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-button color="primary" margin (click)="onBookPlace()"> Book </ion-button>
+</ion-content>
