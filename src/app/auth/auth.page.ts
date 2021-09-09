@@ -12,7 +12,7 @@ import { AuthResponseData, AuthService } from './auth.service';
 })
 export class AuthPage implements OnInit {
   isLoading = false;
-  isLogin = true;
+  isLogin = false;
 
   constructor(
     private authService: AuthService,
