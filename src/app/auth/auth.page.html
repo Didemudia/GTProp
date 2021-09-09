@@ -4,13 +4,12 @@
       <ion-col> </ion-col>
     </ion-row>
 
-    <ion-row style="width: 70%;">
+    <ion-row style="width: 70%">
       <ion-col class="ion-text-center">
         <ion-img
           class="ion-padding"
           src="../assets/img/Login-Screen-Illustration.png"
         ></ion-img>
-
       </ion-col>
     </ion-row>
 
@@ -41,7 +40,7 @@
           <ion-item>
             <ion-label position="floating">Password</ion-label>
             <ion-input
-              type="password"
+              [type]="pword ? 'password' : 'text' "
               ngModel
               name="password"
               required
@@ -49,9 +48,13 @@
               #passwordCtrl="ngModel"
             ></ion-input>
 
-            <ion-buttons slot="end" class="ion-align-self-center">
+            <ion-buttons
+              (click)="showPword()"
+              slot="end"
+              class="ion-align-self-center"
+            >
               <ion-button>
-                <ion-icon name="eye-off-outline"></ion-icon>
+                <ion-icon [name]="pword ? 'eye-off-outline' : 'eye-outline' "></ion-icon>
               </ion-button>
             </ion-buttons>
           </ion-item>
@@ -107,12 +110,17 @@
       </ion-row> -->
 
       <ion-row>
-      <ion-col>
-        <ion-text class="ion-text-center"
-          ><p>Don't have an account? <a (click)="onSwitchAuthMode()"> {{isLogin ? 'Sign Up' : 'Log In'}} </a></p></ion-text
-        >
-      </ion-col>
-    </ion-row>
+        <ion-col>
+          <ion-text class="ion-text-center"
+            ><p>
+              Don't have an account?
+              <a (click)="onSwitchAuthMode()">
+                {{isLogin ? 'Sign Up' : 'Log In'}}
+              </a>
+            </p></ion-text
+          >
+        </ion-col>
+      </ion-row>
     </form>
   </ion-grid>
 </ion-content>

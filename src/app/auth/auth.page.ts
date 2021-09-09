@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -10,9 +11,12 @@ import { AuthResponseData, AuthService } from './auth.service';
   templateUrl: './auth.page.html',
   styleUrls: ['./auth.page.scss'],
 })
-export class AuthPage implements OnInit {
-  isLoading = false;
-  isLogin = false;
+export class AuthPage implements OnInit, OnDestroy {
+  authObs: Observable<AuthResponseData>;
+  private stopStream = new Subject<boolean>();
+  isLoading: boolean;
+  isLogin: boolean;
+  pword: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -25,19 +29,14 @@ export class AuthPage implements OnInit {
 
   authenticate(email: string, password: string) {
     this.isLoading = true;
-
-
     this.loadingCtrl
       .create({ keyboardClose: true, message: 'Logging in...' })
       .then((loadingEl) => {
         loadingEl.present();
-        let authObs: Observable<AuthResponseData>;
-        if (this.isLogin) {
-          authObs = this.authService.login(email, password);
-        } else {
-          authObs = this.authService.signup(email, password);
-        }
-        authObs.subscribe(resData => {
+        this.authObs = this.isLogin ? this.authService.login(email, password) : this.authService.signup(email, password);
+        this.authObs.pipe(
+         takeUntil(this.stopStream)
+        ).subscribe(resData => {
           console.log(resData);
           this.isLoading = false;
           loadingEl.dismiss();
@@ -45,18 +44,24 @@ export class AuthPage implements OnInit {
         }, errRes => {
           loadingEl.dismiss();
           const code = errRes.error.error.message;
-          let message = 'Unable to sig you in. Please try again.';
-
-          if (code === 'EMAIL_EXISTS') {
-            message = 'This email already exists';
-          } else if (code === 'EMAIL_NOT_FOUND') {
-            message = 'Email address could not be found';
-          } else if (code === 'INVALID_PASSWORD') {
-            message = 'This password is incorrect';
-          }
+          const message = this.emailVerification(code);
           this.showAlert(message);
         });
       });
+  }
+
+  emailVerification = (code: string): string => {
+    let message = '';
+    if (code === 'EMAIL_EXISTS') {
+      message = 'This email already exists';
+    } else if (code === 'EMAIL_NOT_FOUND') {
+      message = 'Email address could not be found';
+    } else if (code === 'INVALID_PASSWORD') {
+      message = 'This password is incorrect';
+    }else{
+      message = 'Unable to sign in';
+    }
+    return message
   }
 
   onSubmit(form: NgForm) {
@@ -82,5 +87,14 @@ export class AuthPage implements OnInit {
 
   onSwitchAuthMode() {
     this.isLogin = !this.isLogin;
+  }
+
+  showPword(): void {
+    this.pword = !this.pword;
+  }
+
+
+  ngOnDestroy(){
+   this.stopStream.next(true);
   }
 }

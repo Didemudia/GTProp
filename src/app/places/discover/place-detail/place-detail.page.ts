@@ -18,6 +18,9 @@ import { PlacesService } from '../../places.service';
 export class PlaceDetailPage implements OnInit, OnDestroy {
   place: Place;
   private placeSub: Subscription;
+  likeIcon: string = 'heart-outline';
+  like: boolean = true;
+
 
   constructor(
     private navCtrl: NavController,
@@ -92,6 +95,13 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
   openBookingModal(mode: 'select' | 'random') {
     console.log(mode);
   }
+
+
+  toggleLiked(): void {
+    this.like = !this.like;
+  }
+
+
 
   ngOnDestroy() {
     if (this.placeSub) {

@@ -40,8 +40,12 @@
       <h3>{{place.title}}</h3>
     </ion-col>
     <ion-col class="ion-align-self-center ion-text-right">
-      <ion-button fill="clear" class="icon-only">
-        <ion-icon size="large" color="danger" name="heart"></ion-icon>
+      <ion-button (click) = 'toggleLiked()' fill="clear" class="icon-only">
+        <ion-icon
+          size="large"
+          color="danger"
+          [name]="!like ? 'heart' : 'heart-outline' "
+        ></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>
@@ -51,16 +55,16 @@
       <ion-icon name="location-outline" color="primary"></ion-icon>
       <ion-label style="color: #808289"> {{place.location}} </ion-label>
       <h5><strong>Description</strong></h5>
-      <ion-text>
-        {{place.description}}
-      </ion-text>
-      <p><strong>Property Type: </strong> {{place.type}} </p>
+      <ion-text> {{place.description}} </ion-text>
+      <p><strong>Property Type: </strong> {{place.type}}</p>
 
-      <p><strong>Added on: </strong> {{place.date | date}} </p>
+      <p><strong>Added on: </strong> {{place.date | date}}</p>
 
-      <p><strong>Agent: </strong> {{place.userId}} </p>
+      <p><strong>Agent: </strong> {{place.userId}}</p>
     </ion-col>
   </ion-row>
 
-  <ion-button color="primary" margin (click)="onBookPlace()"> Contact Agent </ion-button>
+  <ion-button color="primary" margin (click)="onBookPlace()">
+    Contact Agent
+  </ion-button>
 </ion-content>

@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap, delay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { Place } from './place.model';
 
@@ -18,8 +18,8 @@ export class PlacesService {
       'https://i.pinimg.com/originals/8f/c6/f7/8fc6f7319a45f87aeb4fbc9be96b9ff7.jpg',
       159.99,
       'Bungalow',
-      new Date(),
-      'Sujimoto Agency',
+      new Date('2019-12-31'),
+      'Daniel',
       '2 Bed Rooms'
     ),
     new Place(
@@ -31,7 +31,7 @@ export class PlacesService {
       189.99,
       'Duplex',
       new Date(),
-      'Sujimoto Agency',
+      'Daniel',
       '3 Bed Rooms'
     ),
     new Place(
@@ -43,7 +43,7 @@ export class PlacesService {
       99.99,
       'Block of Flat',
       new Date(),
-      'Sujimoto Agency',
+      'Daniel',
       '2 Bed Rooms'
     ),
     new Place(
@@ -55,7 +55,7 @@ export class PlacesService {
       99.99,
       'Duplex',
       new Date(),
-      'Sujimoto Agency',
+      'Daniel',
       '2 Bed Rooms'
     ),
   ]);
@@ -82,7 +82,7 @@ export class PlacesService {
     price: number,
     type: string,
     date: Date,
-    bed: string
+    rooms: string
   ) {
     const newPlace = new Place(
       Math.random().toString(),
@@ -94,12 +94,17 @@ export class PlacesService {
       type,
       date,
       this.authService.userId,
-      bed
+      rooms
     );
 
-    this.places.pipe(take(1)).subscribe((places) => {
-      this._places.next(places.concat(newPlace));
-    });
+    return this.places
+      .pipe(
+        take(1),
+      delay(1000),
+      tap(places => {
+        this._places.next(places.concat(newPlace));
+      })
+    );
   }
 
   // updatePlace(placeId: string, title: string, description: string) {
