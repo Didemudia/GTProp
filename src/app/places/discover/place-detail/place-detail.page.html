@@ -28,7 +28,7 @@
 
     <!-- <ion-img [src]="place.imageUrl"></ion-img> -->
 
-    <ion-button routerLink="/places/tabs/discover" class="detailOptionButton">
+    <ion-button class="detailOptionButton">
       <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-button>
   </div>
@@ -57,6 +57,8 @@
       <h5><strong>Description</strong></h5>
       <ion-text> {{place.description}} </ion-text>
       <p><strong>Property Type: </strong> {{place.type}}</p>
+
+      <p><strong>Number of Rooms: </strong> {{place.rooms}}</p>
 
       <p><strong>Added on: </strong> {{place.date | date}}</p>
 

@@ -39,10 +39,21 @@
   <ion-row class="ion-padding">
     <ion-col text-center>
       <h4>Posted Ads</h4>
-      <ion-list>
+
+      <div *ngIf="isLoading" class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+      <div *ngIf="!isLoading && offers.length < 0" class="ion-text-center">
+        <p>No Properties found! Please create one...</p>
+        <ion-button color="primary" routerLink="places/tabs/new"
+          >Post Property</ion-button
+        >
+      </div>
+
+      <ion-list *ngIf="!isLoading && offers.length > 0">
         <ion-item-sliding *ngFor="let offer of offers" #slidingItem>
           <ion-item
-            [routerLink]="['/', 'places', 'tabs', 'offers', offer.id]"
+            [routerLink]="['/', 'places', 'tabs', 'discover', offer.id]"
             detail
           >
             <ion-thumbnail slot="start">

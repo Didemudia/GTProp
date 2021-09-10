@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Place } from '../../place.model';
 import { PlacesService } from '../../places.service';
@@ -17,7 +17,9 @@ export class OfferBookingsPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+
+
   ) {}
 
   ngOnInit() {
@@ -33,6 +35,7 @@ export class OfferBookingsPage implements OnInit, OnDestroy {
         });
     });
   }
+
 
   ngOnDestroy() {
     if (this.placeSub) {

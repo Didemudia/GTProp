@@ -6,7 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { IonItemSliding, LoadingController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Place } from '../place.model';
 import { PlacesService } from '../places.service';
 
 @Component({
@@ -16,6 +18,9 @@ import { PlacesService } from '../places.service';
 })
 export class NewOfferPage implements OnInit {
   form: FormGroup;
+  offers: Place[];
+  isLoading: boolean;
+  private placesSub: Subscription;
 
   constructor(
     private placesServices: PlacesService,
@@ -103,5 +108,25 @@ export class NewOfferPage implements OnInit {
             });
         });
 
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
+    this.placesServices.fetchPlaces().subscribe(() => {
+      this.isLoading = false;
+
+    });
+  }
+
+  onEdit(offerId: string, slidingItem: IonItemSliding) {
+    slidingItem.close();
+    this.router.navigate(['/', 'places', 'tabs', 'offers', 'edit-offer', offerId]);
+    console.log('Editing Item', offerId);
+  }
+
+  ngOnDestroy() {
+    if (this.placesSub) {
+      this.placesSub.unsubscribe();
+    }
   }
 }

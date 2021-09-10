@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: NewOfferPage
-  }
+  },
+  {
+    path: 'edit-offer',
+    loadChildren: () => import('./edit-offer/edit-offer.module').then( m => m.EditOfferPageModule)
+  },
 ];
 
 @NgModule({
