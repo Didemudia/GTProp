@@ -122,6 +122,29 @@ export class PlacesService {
     );
   }
 
+  // getPlace(id: string) {
+  //   return this.http
+  //     .get<PlaceData>(
+  //       `https://ionic-angular-fab2b-default-rtdb.firebaseio.com/offered-properties/${id}.json`
+  //     )
+  //     .pipe(
+  //       map(placeData => {
+  //         return new Place(
+  //           id,
+  //           placeData.title,
+  //           placeData.description,
+  //           placeData.location,
+  //           placeData.imageUrl,
+  //           placeData.price,
+  //           placeData.type,
+  //           new Date(placeData.date),
+  //           placeData.userId,
+  //           placeData.rooms
+  //         );
+  //       })
+  //     );
+  // }
+
   addPlace(
     title: string,
     location: string,
@@ -189,7 +212,7 @@ export class PlacesService {
           oldPlace.type,
           oldPlace.date,
           oldPlace.userId,
-          oldPlace.rooms,
+          oldPlace.rooms
         );
         return this.http.put(
           `https://ionic-angular-fab2b-default-rtdb.firebaseio.com/offered-properties/${placeId}.json`,
@@ -200,7 +223,6 @@ export class PlacesService {
         this._places.next(updatedPlaces);
       })
     );
-
   }
 
   // updatePlace(placeId: string, title: string, description: string) {
